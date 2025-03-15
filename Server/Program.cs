@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Server.Mappers;
 using Server.Repositories.Abstracts;
 using Server.Repositories.Concretes;
 using Server.Repositories.Context;
+using Server.Services.Abstracts;
+using Server.Services.Concretes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +23,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+// AutoMapper'i servise ekleme
+builder.Services.AddAutoMapper(typeof(ProductMapperProfile));
 
 builder.Services.AddCors(options =>
 {
